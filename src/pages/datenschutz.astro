@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout
+  title={`Datenschutz - ${site.shortName}`}
+  description={`Datenschutzhinweise des ${site.legalName}.`}
+  active="privacy"
+>
+  <section
+    class="mx-auto min-h-[calc(100svh-8rem)] w-full max-w-[87.5rem] px-container pt-20 pb-32"
+  >
+    <div class="mb-16 max-w-2xl">
+      <p class="label-caps mb-6 text-secondary">Datenschutz</p>
+      <h1 class="font-organic-title text-headline-mobile text-primary md:text-headline">
+        Schutz
+        <span class="block text-on-surface-variant">persönlicher Daten</span>
+      </h1>
+      <p class="mt-8 text-body-lg text-on-surface-variant">
+        Diese Hinweise beschreiben, wie Kontaktanfragen und technische Zugriffsdaten auf dieser
+        Website behandelt werden.
+      </p>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      {
+        [
+          [
+            "Kontaktaufnahme",
+            "Wenn du per E-Mail Kontakt aufnimmst, werden die übermittelten Angaben zur Bearbeitung der Anfrage genutzt.",
+          ],
+          [
+            "Serverdaten",
+            "Beim Besuch der Website können technisch notwendige Zugriffsdaten verarbeitet werden, damit die Seiten ausgeliefert werden.",
+          ],
+          [
+            "Externe Links",
+            "Links zu externen Angeboten, etwa Social-Media-Seiten, werden erst beim Anklicken aufgerufen.",
+          ],
+          ["Auskunft", `Fragen zum Datenschutz können an ${site.contactEmail} gerichtet werden.`],
+        ].map(([title, text]) => (
+          <article class="paper-card rounded-[2rem] p-8">
+            <h2 class="font-organic-title mb-4 text-headline-md text-primary">{title}</h2>
+            <p class="text-body text-on-surface-variant">{text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

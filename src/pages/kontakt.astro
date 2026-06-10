@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout
+  title={`Kontakt - ${site.shortName}`}
+  description={`Kontakt zum ${site.legalName}.`}
+  active="contact"
+>
+  <section
+    class="mx-auto min-h-[calc(100svh-8rem)] w-full max-w-[87.5rem] px-container pt-20 pb-32"
+  >
+    <div class="mb-16 max-w-2xl">
+      <p class="label-caps mb-6 text-secondary">Kontakt</p>
+      <h1 class="font-organic-title text-headline-mobile text-primary md:text-headline">
+        Direkt
+        <span class="block text-on-surface-variant">erreichbar</span>
+      </h1>
+      <p class="mt-8 text-body-lg text-on-surface-variant">
+        Für Fragen zu Angeboten, Mitgliedschaft, Gebetszeiten oder Vereinsarbeit ist der {
+          site.shortName
+        } per E-Mail erreichbar.
+      </p>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      <article class="paper-card rounded-[2rem] p-8">
+        <p class="label-caps mb-4 text-secondary">E-Mail</p>
+        <a
+          class="font-organic-title text-headline-md text-primary"
+          href={`mailto:${site.contactEmail}`}
+        >
+          {site.contactEmail}
+        </a>
+      </article>
+      <article class="glass-panel rounded-[2rem] p-8">
+        <p class="label-caps mb-4 text-secondary">Social</p>
+        <a
+          class="font-organic-title text-headline-md text-primary"
+          href={site.facebookUrl}
+          rel="noreferrer"
+          target="_blank"
+        >
+          Facebookseite
+        </a>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

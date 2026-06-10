@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { addressCityLine, routes, site } from "../data/site";
+---
+
+<BaseLayout
+  title={`Standort - ${site.shortName}`}
+  description={`Standort und Anschrift des ${site.legalName}.`}
+  active="location"
+>
+  <section
+    class="mx-auto min-h-[calc(100svh-8rem)] w-full max-w-[87.5rem] px-container pt-20 pb-32"
+  >
+    <div class="grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-start">
+      <div>
+        <p class="label-caps mb-6 text-secondary">Standort</p>
+        <h1 class="font-organic-title text-headline-mobile text-primary md:text-headline">
+          {site.shortName}
+          <span class="block text-on-surface-variant">vor Ort</span>
+        </h1>
+        <p class="mt-8 text-body-lg text-on-surface-variant">
+          Der Sitz des Vereins ist in Hennef. Für Besuchszeiten und Veranstaltungen bitte vorher
+          Kontakt aufnehmen.
+        </p>
+      </div>
+
+      <article class="paper-card rounded-[2rem] p-8 md:p-12">
+        <p class="label-caps mb-4 text-secondary">Anschrift</p>
+        <address class="font-organic-title text-headline-md text-primary not-italic">
+          {site.legalName}<br />
+          {site.address.street}<br />
+          {addressCityLine}
+        </address>
+        <a
+          class="organic-button label-caps mt-8 inline-flex bg-primary px-6 py-3 text-on-primary"
+          href={routes.contact}
+        >
+          Kontakt aufnehmen
+        </a>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

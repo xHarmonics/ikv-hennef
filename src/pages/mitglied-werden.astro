@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { routes, site } from "../data/site";
+---
+
+<BaseLayout
+  title={`Mitglied werden - ${site.shortName}`}
+  description={`Informationen zur Mitgliedschaft im ${site.legalName}.`}
+  active="join"
+>
+  <section
+    class="mx-auto min-h-[calc(100svh-8rem)] w-full max-w-[87.5rem] px-container pt-20 pb-32"
+  >
+    <div class="grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-start">
+      <div>
+        <p class="label-caps mb-6 text-secondary">Mitgliedschaft</p>
+        <h1 class="font-organic-title text-headline-mobile text-primary md:text-headline">
+          Teil der
+          <span class="block text-on-surface-variant">Gemeinschaft</span>
+        </h1>
+        <p class="mt-8 text-body-lg text-on-surface-variant">
+          Mitglieder tragen die Arbeit des Vereins mit und unterstützen Angebote für Begegnung,
+          Bildung und Spiritualität in Hennef.
+        </p>
+      </div>
+
+      <article class="paper-card rounded-[2rem] p-8 md:p-12">
+        <h2 class="font-organic-title mb-8 text-headline-md text-primary">So geht es weiter</h2>
+        <ol class="space-y-6 text-body text-on-surface-variant">
+          <li>
+            <strong class="text-primary">1.</strong> Anmeldeformular über die Download-Seite aufrufen.
+          </li>
+          <li>
+            <strong class="text-primary">2.</strong> Formular ausfüllen und die Satzung beachten.
+          </li>
+          <li><strong class="text-primary">3.</strong> Rückfragen direkt an den Verein senden.</li>
+        </ol>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a
+            class="organic-button label-caps bg-primary px-6 py-3 text-on-primary"
+            href={routes.downloads}
+          >
+            Formulare
+          </a>
+          <a
+            class="organic-button label-caps border border-outline-variant bg-surface-container px-6 py-3 text-primary"
+            href={routes.contact}
+          >
+            Kontakt
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

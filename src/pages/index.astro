@@ -1,0 +1,179 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  educationPrograms,
+  heroTitle,
+  mobilePrayerTimes,
+  prayerTimes,
+  routes,
+  site,
+} from "../data/site";
+---
+
+<BaseLayout
+  title={`${site.displayName} - ${site.tagline}`}
+  description={site.description}
+  active="home"
+>
+  <section
+    id="moschee"
+    class="relative mx-auto grid w-full max-w-[87.5rem] grid-cols-1 items-center gap-10 px-container pt-14 pb-16 md:min-h-[calc(100svh-5rem)] md:grid-cols-12 md:gap-12 md:pt-24 md:pb-28"
+  >
+    <div class="md:col-span-7">
+      <h1 class="font-organic-title text-primary">
+        <span class="hidden text-display md:block">
+          {heroTitle.desktopLead}
+          <span class="mt-2 block pl-8 font-light text-secondary italic">
+            {heroTitle.desktopAccent}
+          </span>
+        </span>
+        <span class="block text-[4rem] leading-[1.12] md:hidden">
+          {
+            heroTitle.mobileLines.map((line) => (
+              <>
+                {line}
+                <br />
+              </>
+            ))
+          }
+          <span class="text-secondary">{heroTitle.mobileAccent}</span>
+        </span>
+      </h1>
+      <p class="mt-8 max-w-lg text-body-lg text-on-surface-variant">
+        {site.description}
+      </p>
+      <div class="mt-12 hidden flex-wrap gap-6 md:flex">
+        <a
+          href={routes.mosque}
+          class="organic-button label-caps bg-primary px-8 py-4 text-on-primary shadow-[0_1rem_2rem_rgba(0,21,36,0.16)]"
+        >
+          Entdecke unsere Vision
+        </a>
+        <a
+          href={routes.join}
+          class="organic-button label-caps border border-outline-variant bg-surface-container px-8 py-4 text-primary transition-colors hover:bg-surface-high"
+        >
+          Mitglied werden
+        </a>
+      </div>
+    </div>
+
+    <div class="relative mt-8 md:col-span-5 md:mt-0">
+      <picture>
+        <source media="(max-width: 47.9375rem)" srcset="/images/hero-interior.jpg" />
+        <img
+          src="/images/hero-architecture.jpg"
+          alt="Warm beleuchtete Architektur mit organischen Bögen als Sinnbild für einen offenen Kulturraum."
+          class="organic-frame aspect-[4/5] w-full object-cover shadow-[0_2rem_4rem_rgba(0,21,36,0.12)]"
+          loading="eager"
+        />
+      </picture>
+
+      <aside
+        id="gebetszeiten"
+        aria-label="Gebetszeiten"
+        class="glass-panel absolute -bottom-16 -left-16 hidden w-80 rounded-[2rem] p-8 md:block"
+      >
+        <h2 class="font-organic-title mb-6 flex items-center gap-3 text-[1.5rem] text-primary">
+          <span class="material-symbols-outlined text-secondary" aria-hidden="true">
+            nest_clock_farsight_analog
+          </span>
+          Gebetszeiten
+        </h2>
+        <div class="space-y-4 text-body text-on-surface-variant">
+          {
+            prayerTimes.map(([name, time]) => (
+              <div
+                class:list={[
+                  "relative flex items-end justify-between border-b border-outline-variant/30 pb-2 last:border-b-0",
+                  name === "Maghrib" ? "text-secondary" : "",
+                ]}
+              >
+                {name === "Maghrib" && (
+                  <span
+                    class="absolute top-1/2 -left-3 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-secondary"
+                    aria-hidden="true"
+                  />
+                )}
+                <span class="label-caps text-outline">{name}</span>
+                <span class="font-medium text-primary">{time}</span>
+              </div>
+            ))
+          }
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="relative z-10 -mt-20 px-container md:hidden">
+    <div class="glass-panel rounded-3xl p-8 text-center">
+      <p class="label-caps mb-2 text-secondary">Aktuelles Gebet</p>
+      <h2 class="font-organic-title text-headline-mobile text-primary">Dhuhr</h2>
+      <p class="mb-6 text-body-lg text-on-surface-variant">13:15</p>
+      <div class="mb-6 h-px w-full bg-outline-variant/30"></div>
+      <div class="grid grid-cols-5 gap-2 text-center">
+        {
+          mobilePrayerTimes.map(([name, time]) => (
+            <div class:list={["flex flex-col", name === "Dhuhr" ? "text-primary" : "opacity-55"]}>
+              <span class="label-caps mb-1 text-[0.625rem]">{name}</span>
+              <span class="text-sm">{time}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="bildung" class="mx-auto w-full max-w-[87.5rem] px-container py-28 md:py-36">
+    <div class="mb-16 flex flex-col gap-8 md:mb-20 md:flex-row md:items-end md:justify-between">
+      <h2 class="font-organic-title max-w-xl text-headline-mobile text-primary md:text-headline">
+        Räume für
+        <span class="block text-on-surface-variant">Wachstum</span>
+      </h2>
+      <a
+        href={routes.education}
+        class="label-caps flex items-center gap-2 self-start border-b border-secondary/30 pb-1 text-secondary transition-colors hover:text-primary md:self-auto"
+      >
+        Alle Programme ansehen
+        <span class="material-symbols-outlined text-[1rem]" aria-hidden="true">arrow_forward</span>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-3">
+      {
+        educationPrograms.map((program, index) => (
+          <article
+            class:list={[
+              "glass-panel group relative flex items-start gap-6 overflow-hidden rounded-2xl p-6 transition-transform duration-500 hover:-translate-y-1 md:min-h-[22rem] md:flex-col md:rounded-[2rem] md:p-10 md:hover:-translate-y-3",
+              index === 1 ? "md:mt-12 md:min-h-[26rem]" : "",
+              index === 2 ? "bg-primary/5 md:mt-4 md:min-h-[24rem]" : "",
+            ]}
+          >
+            <div
+              class:list={[
+                "flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-surface-container transition-colors duration-300 md:mb-auto md:h-16 md:w-16",
+                program.accent === "secondary"
+                  ? "text-secondary group-hover:bg-secondary group-hover:text-on-secondary"
+                  : "text-primary group-hover:bg-primary group-hover:text-on-primary",
+              ]}
+            >
+              <span
+                class="material-symbols-outlined text-[1.5rem] md:text-[2rem]"
+                aria-hidden="true"
+              >
+                {program.icon}
+              </span>
+            </div>
+            <div>
+              <h3 class="md:font-organic-title mb-1 text-body-lg font-bold text-primary md:mb-4 md:text-[1.75rem]">
+                {program.title}
+              </h3>
+              <p class="hidden text-body text-on-surface-variant md:block">{program.text}</p>
+              <p class="text-body text-on-surface-variant md:hidden">{program.mobileText}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { prayerTimes, routes, site } from "../data/site";
+---
+
+<BaseLayout
+  title={`Gebetszeiten - ${site.shortName}`}
+  description={`Gebetszeiten und Hinweise zur Teilnahme beim ${site.displayName}.`}
+  active="prayer"
+>
+  <section
+    class="mx-auto min-h-[calc(100svh-8rem)] w-full max-w-[87.5rem] px-container pt-20 pb-32"
+  >
+    <div class="mb-16 max-w-2xl">
+      <p class="label-caps mb-6 text-secondary">Gebetszeiten</p>
+      <h1 class="font-organic-title text-headline-mobile text-primary md:text-headline">
+        Zeit für Ruhe
+        <span class="block text-on-surface-variant">und Sammlung</span>
+      </h1>
+      <p class="mt-8 text-body-lg text-on-surface-variant">
+        Die Zeiten dienen als Orientierung. Bitte prüfe kurzfristige Änderungen, Feiertage und
+        besondere Termine direkt über den Verein.
+      </p>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-[1fr_0.8fr] md:items-start">
+      <article class="paper-card rounded-[2rem] p-8 md:p-12">
+        <h2 class="font-organic-title mb-8 text-headline-md text-primary">Heute</h2>
+        <div class="space-y-5">
+          {
+            prayerTimes.map(([name, time]) => (
+              <div class="flex items-end justify-between border-b border-outline-variant/30 pb-4 last:border-b-0">
+                <span class="label-caps text-on-surface-variant">{name}</span>
+                <span class="font-organic-title text-headline-md text-primary">{time}</span>
+              </div>
+            ))
+          }
+        </div>
+      </article>
+
+      <aside class="glass-panel rounded-[2rem] p-8 md:p-10">
+        <h2 class="font-organic-title mb-4 text-headline-md text-primary">Vor Ort</h2>
+        <p class="text-body text-on-surface-variant">
+          Für Freitagsgebet, Ramadan-Programme und besondere Veranstaltungen werden Zeiten und
+          Hinweise über die Kanäle des Vereins bekannt gegeben.
+        </p>
+        <a
+          href={routes.contact}
+          class="organic-button label-caps mt-8 inline-flex bg-primary px-6 py-3 text-on-primary"
+        >
+          Kontakt aufnehmen
+        </a>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

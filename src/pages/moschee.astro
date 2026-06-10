@@ -1,0 +1,72 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { routes, site } from "../data/site";
+---
+
+<BaseLayout
+  title={`Moschee - ${site.shortName}`}
+  description={`${site.shortName} als Ort für Gebet, Begegnung und kulturelle Gemeinschaft.`}
+  active="mosque"
+>
+  <section class="mx-auto w-full max-w-[87.5rem] px-container pt-20 pb-32">
+    <div class="grid gap-12 md:grid-cols-12 md:items-center">
+      <div class="md:col-span-6">
+        <p class="label-caps mb-6 text-secondary">Moschee</p>
+        <h1 class="font-organic-title text-headline-mobile text-primary md:text-headline">
+          Ein offener Ort
+          <span class="block text-on-surface-variant">für Hennef</span>
+        </h1>
+        <p class="mt-8 text-body-lg text-on-surface-variant">
+          Der {site.legalName} versteht die Moschee als Raum für Spiritualität, Bildung, Austausch und
+          Verantwortung in der Stadtgesellschaft.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a
+            class="organic-button label-caps bg-primary px-6 py-3 text-on-primary"
+            href={routes.location}
+          >
+            Standort
+          </a>
+          <a
+            class="organic-button label-caps border border-outline-variant bg-surface-container px-6 py-3 text-primary"
+            href={routes.contact}
+          >
+            Kontakt
+          </a>
+        </div>
+      </div>
+
+      <div class="md:col-span-6">
+        <img
+          src="/images/hero-architecture.jpg"
+          alt={`Warme Bogenarchitektur als visuelles Motiv für den Kulturraum des ${site.shortName}.`}
+          class="organic-frame aspect-[4/5] w-full object-cover shadow-[0_2rem_4rem_rgba(0,21,36,0.12)]"
+        />
+      </div>
+    </div>
+
+    <div class="mt-24 grid gap-6 md:grid-cols-3">
+      {
+        [
+          [
+            "Gebet",
+            "Ein verlässlicher Rahmen für persönliche Sammlung und gemeinsame religiöse Praxis.",
+          ],
+          [
+            "Begegnung",
+            "Ein Ort, an dem Generationen, Perspektiven und Lebensrealitäten zusammenkommen.",
+          ],
+          [
+            "Verantwortung",
+            "Engagement für Bildung, gegenseitigen Respekt und ein gutes Miteinander in Hennef.",
+          ],
+        ].map(([title, text]) => (
+          <article class="glass-panel rounded-[2rem] p-8">
+            <h2 class="font-organic-title mb-4 text-headline-md text-primary">{title}</h2>
+            <p class="text-body text-on-surface-variant">{text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

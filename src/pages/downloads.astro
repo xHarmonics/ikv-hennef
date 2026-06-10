@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { downloadDocuments, site } from "../data/site";
+---
+
+<BaseLayout
+  title={`Downloads & Formulare - ${site.shortName}`}
+  description={`Eine kuratierte Sammlung wesentlicher Dokumente des ${site.displayName}.`}
+  active="downloads"
+>
+  <section
+    class="mx-auto min-h-[calc(100svh-8rem)] w-full max-w-[87.5rem] px-container pt-20 pb-32"
+  >
+    <div class="mb-24 max-w-2xl text-center md:mb-32 md:text-left">
+      <p class="label-caps mb-6 text-secondary">Ressourcen</p>
+      <h1 class="font-organic-title text-headline-mobile text-primary md:text-headline">
+        Downloads
+        <span class="block">&amp; Formulare</span>
+      </h1>
+      <div class="mx-auto mt-6 h-0.5 w-12 rounded-full bg-secondary md:mx-0 md:hidden"></div>
+      <p class="mt-8 text-body-lg text-on-surface-variant">
+        Eine kuratierte Sammlung wesentlicher Dokumente.
+      </p>
+    </div>
+
+    <div class="relative flex flex-col gap-8 md:gap-6">
+      {
+        downloadDocuments.map((document, index) => (
+          <article
+            class:list={[
+              "group relative md:w-3/4",
+              index === 0 ? "self-start" : "self-end md:-mt-10",
+              index === 1 ? "ml-4 md:ml-0" : "",
+            ]}
+          >
+            <a
+              href={document.href}
+              class="paper-card block overflow-hidden rounded-xl p-6 transition-all duration-500 hover:-translate-y-1 hover:bg-white/80 md:rounded-[2rem] md:p-12"
+              aria-label={`${document.title} herunterladen`}
+            >
+              <div class="flex items-start justify-between gap-4 md:items-center md:gap-8">
+                <div
+                  class:list={[
+                    "hidden h-24 w-24 shrink-0 rotate-[-3deg] items-center justify-center rounded-[1.5rem] transition-transform duration-500 group-hover:scale-105 group-hover:rotate-0 md:flex",
+                    document.tone === "primary"
+                      ? "bg-primary-container text-on-primary-container"
+                      : "bg-secondary-container text-on-secondary-container",
+                  ]}
+                >
+                  <span class="material-symbols-outlined text-[3rem]" aria-hidden="true">
+                    {document.icon}
+                  </span>
+                </div>
+
+                <div class="flex-1">
+                  <span class="label-caps mb-3 inline-block rounded-full border border-secondary/20 bg-secondary/10 px-3 py-1 text-secondary md:mb-4">
+                    {document.meta}
+                  </span>
+                  <h2 class="font-organic-title text-[1.625rem] leading-tight text-primary transition-colors duration-300 group-hover:text-secondary md:text-headline-md">
+                    {document.title}
+                  </h2>
+                  <p class="mt-3 hidden text-body text-on-surface-variant md:block">
+                    {document.description}
+                  </p>
+                </div>
+
+                <div class="hidden shrink-0 items-center gap-2 text-primary opacity-60 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100 md:flex">
+                  <span class="label-caps">Download</span>
+                  <span class="material-symbols-outlined" aria-hidden="true">
+                    arrow_downward
+                  </span>
+                </div>
+
+                <span
+                  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary-container text-on-primary-container shadow-[0_0.75rem_1.5rem_rgba(0,21,36,0.18)] transition-colors duration-300 group-hover:bg-secondary group-hover:text-on-secondary md:hidden"
+                  aria-hidden="true"
+                >
+                  <span class="material-symbols-outlined">download</span>
+                </span>
+              </div>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

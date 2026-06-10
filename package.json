@@ -1,0 +1,33 @@
+{
+  "name": "ikv-hennef",
+  "type": "module",
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro build && wrangler dev",
+    "deploy": "astro build && wrangler pages deploy dist",
+    "astro": "astro",
+    "format": "prettier --write \"**/*.{astro,ts,tsx,js,jsx,md,mdx,json,css}\"",
+    "format:check": "prettier --check \"**/*.{astro,ts,tsx,js,jsx,md,mdx,json,css}\""
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^13.5.0",
+    "@tailwindcss/vite": "^4.2.4",
+    "astro": "^6.3.0",
+    "sharp": "0.34.5",
+    "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "prettier": "3.8.3",
+    "prettier-plugin-astro": "0.14.1",
+    "prettier-plugin-tailwindcss": "0.8.0",
+    "wrangler": "^4.90.0"
+  },
+  "overrides": {
+    "vite": "^7"
+  }
+}

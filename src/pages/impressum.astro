@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { addressCityLine, site } from "../data/site";
+---
+
+<BaseLayout
+  title={`Impressum - ${site.shortName}`}
+  description={`Impressum des ${site.legalName}.`}
+  active="imprint"
+>
+  <section
+    class="mx-auto min-h-[calc(100svh-8rem)] w-full max-w-[87.5rem] px-container pt-20 pb-32"
+  >
+    <div class="mb-16 max-w-2xl">
+      <p class="label-caps mb-6 text-secondary">Impressum</p>
+      <h1 class="font-organic-title text-headline-mobile text-primary md:text-headline">
+        Angaben gemäß
+        <span class="block text-on-surface-variant">§ 5 DDG</span>
+      </h1>
+    </div>
+
+    <article class="paper-card max-w-3xl rounded-[2rem] p-8 md:p-12">
+      <h2 class="font-organic-title mb-6 text-headline-md text-primary">{site.legalName}</h2>
+      <div class="space-y-6 text-body text-on-surface-variant">
+        <p>
+          {site.address.street}<br />
+          {addressCityLine}
+        </p>
+        <p>
+          E-Mail:
+          <a
+            class="text-primary underline decoration-secondary/40"
+            href={`mailto:${site.contactEmail}`}
+          >
+            {site.contactEmail}
+          </a>
+        </p>
+        <p>Vertreten durch den Vorstand des Vereins.</p>
+        <p>
+          Verantwortlich für diese Website ist der {site.legalName}. Die Inhalte werden mit
+          größtmöglicher Sorgfalt gepflegt.
+        </p>
+      </div>
+    </article>
+  </section>
+</BaseLayout>

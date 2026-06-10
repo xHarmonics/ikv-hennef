@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { routes, site } from "../data/site";
+---
+
+<BaseLayout
+  title={`Spenden - ${site.shortName}`}
+  description={`Spenden und Unterstützung für die Arbeit des ${site.displayName}.`}
+  active="donate"
+>
+  <section
+    class="mx-auto min-h-[calc(100svh-8rem)] w-full max-w-[87.5rem] px-container pt-20 pb-32"
+  >
+    <div class="max-w-2xl">
+      <p class="label-caps mb-6 text-secondary">Spenden</p>
+      <h1 class="font-organic-title text-headline-mobile text-primary md:text-headline">
+        Unterstützung
+        <span class="block text-on-surface-variant">für die Vereinsarbeit</span>
+      </h1>
+      <p class="mt-8 text-body-lg text-on-surface-variant">
+        Spenden helfen, Bildungsangebote, Begegnungsräume und gemeinnützige Projekte des {
+          site.shortName
+        } zu ermöglichen.
+      </p>
+    </div>
+
+    <article class="paper-card mt-16 rounded-[2rem] p-8 md:max-w-3xl md:p-12">
+      <h2 class="font-organic-title mb-4 text-headline-md text-primary">Spendeninformationen</h2>
+      <p class="text-body text-on-surface-variant">
+        Bitte nimm Kontakt mit dem Verein auf, wenn du eine Spende ankündigen oder Informationen zu
+        aktuellen Unterstützungsmöglichkeiten erhalten möchtest.
+      </p>
+      <a
+        class="organic-button label-caps mt-8 inline-flex bg-primary px-6 py-3 text-on-primary"
+        href={routes.contact}
+      >
+        Kontakt aufnehmen
+      </a>
+    </article>
+  </section>
+</BaseLayout>

@@ -1,0 +1,304 @@
+---
+/**
+ * BaseLayout.astro
+ * ---------------------------------------------------------------------------
+ * The single source of truth for <head>, semantic landmarks, and global a11y
+ * scaffolding. Every page should render through this layout so SEO / OG /
+ * canonical / lang stay consistent.
+ */
+
+import { ClientRouter } from "astro:transitions";
+import type { ActiveKey } from "../data/site";
+import {
+  copyrightText,
+  footerItems,
+  menuItems,
+  mobileNavItems,
+  primaryNavItems,
+  routes,
+  site,
+} from "../data/site";
+import "../styles/global.css";
+
+interface Props {
+  /** <title> + og:title + twitter:title */
+  title: string;
+  /** <meta name="description"> + og + twitter */
+  description: string;
+  /** Site-relative or absolute path to a 1200x630 image. */
+  image?: string;
+  /** Override the auto-derived canonical URL. */
+  canonical?: string;
+  /** BCP-47 language tag for <html lang="..."> */
+  lang?: string;
+  /** Set true on staging/preview pages to keep them out of the index. */
+  noindex?: boolean;
+  /** Current primary navigation item. */
+  active?: ActiveKey;
+}
+
+const {
+  title,
+  description,
+  image = "/og-default.jpg",
+  canonical,
+  lang = "de",
+  noindex = false,
+  active = "home",
+} = Astro.props;
+
+// Astro.site comes from astro.config.mjs `site` and is required for absolute URLs.
+const siteURL = Astro.site ?? new URL("http://localhost:4321");
+const canonicalURL = new URL(canonical ?? Astro.url.pathname, siteURL).toString();
+const ogImageURL = new URL(image, siteURL).toString();
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:locale" content={lang.replace("-", "_")} />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Syne:wght@400..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      View Transitions / SPA routing.
+      `<ViewTransitions />` was renamed to `<ClientRouter />` in Astro 5+.
+    -->
+    <ClientRouter />
+  </head>
+
+  <body>
+    <!--
+      WCAG 2.4.1 "Bypass Blocks": visually hidden until focused.
+      Targets the <main id="main"> landmark below.
+    -->
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-on-primary"
+    >
+      Zum Inhalt springen
+    </a>
+
+    <header
+      class="sticky top-0 z-[90] w-full border-b border-outline-variant/20 bg-surface/75 backdrop-blur-xl"
+    >
+      <nav
+        aria-label="Hauptnavigation"
+        class="mx-auto hidden w-full max-w-[87.5rem] items-center justify-between px-container py-5 md:flex"
+      >
+        <a
+          href={routes.home}
+          data-astro-prefetch
+          class="font-organic-title text-headline-md text-primary transition-opacity hover:opacity-80"
+        >
+          {site.shortName}
+        </a>
+
+        <ul class="flex items-center gap-8">
+          {
+            primaryNavItems.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  data-astro-prefetch={item.href.startsWith("/") ? true : undefined}
+                  aria-current={active === item.activeKey ? "page" : undefined}
+                  class:list={[
+                    "label-caps border-b pb-1 transition-colors",
+                    active === item.activeKey
+                      ? "border-secondary/40 text-secondary"
+                      : "border-transparent text-on-surface hover:text-primary",
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <a
+          href={routes.donate}
+          class="organic-button label-caps bg-primary px-7 py-3 text-on-primary shadow-[0_0.875rem_1.75rem_rgba(0,21,36,0.12)]"
+        >
+          Spenden
+        </a>
+      </nav>
+
+      <div class="flex items-center justify-between px-gutter py-4 md:hidden">
+        <button
+          type="button"
+          data-menu-open
+          aria-label="Menü öffnen"
+          class="flex items-center justify-center rounded-full p-2 text-primary transition-colors hover:bg-surface-container"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+        </button>
+
+        <div
+          data-mobile-menu
+          class="fixed inset-0 z-[80] hidden h-screen min-h-screen bg-primary/35 md:hidden"
+          aria-hidden="true"
+        >
+          <div class="absolute inset-0" data-menu-backdrop></div>
+          <nav
+            aria-label="Mobile Navigation"
+            class="relative h-screen min-h-screen w-[84vw] max-w-[22rem] overflow-y-auto rounded-r-[2rem] border-r border-outline-variant/30 bg-surface p-7 shadow-[1.5rem_0_4rem_rgba(0,21,36,0.22)]"
+          >
+            <div class="mb-8 flex items-center justify-between">
+              <p class="font-organic-title text-headline-md text-primary">Menü</p>
+              <button
+                type="button"
+                data-menu-close
+                aria-label="Menü schließen"
+                class="flex items-center justify-center rounded-full bg-surface-container p-2 text-primary transition-colors hover:bg-surface-high"
+              >
+                <span class="material-symbols-outlined" aria-hidden="true">close</span>
+              </button>
+            </div>
+            <div class="flex flex-col gap-2">
+              {
+                menuItems.map((item) => (
+                  <a
+                    href={item.href}
+                    data-astro-prefetch
+                    aria-current={active === item.activeKey ? "page" : undefined}
+                    class:list={[
+                      "rounded-2xl px-4 py-3 text-body-lg transition-colors",
+                      active === item.activeKey
+                        ? "bg-secondary-container text-on-secondary-container"
+                        : "text-on-surface-variant hover:bg-surface-container hover:text-primary",
+                    ]}
+                  >
+                    {item.label}
+                  </a>
+                ))
+              }
+            </div>
+          </nav>
+        </div>
+
+        <a href={routes.home} class="font-organic-title text-headline-mobile text-primary">
+          {site.shortName}
+        </a>
+
+        <div class="h-10 w-10" aria-hidden="true"></div>
+      </div>
+    </header>
+
+    <script is:inline>
+      (() => {
+        const menu = document.querySelector("[data-mobile-menu]");
+        const open = document.querySelector("[data-menu-open]");
+        const closeTargets = document.querySelectorAll("[data-menu-close], [data-menu-backdrop]");
+
+        if (!menu || !open) return;
+
+        const setOpen = (value) => {
+          menu.classList.toggle("hidden", !value);
+          menu.setAttribute("aria-hidden", value ? "false" : "true");
+          document.documentElement.classList.toggle("overflow-hidden", value);
+        };
+
+        open.addEventListener("click", () => setOpen(true));
+        closeTargets.forEach((target) => target.addEventListener("click", () => setOpen(false)));
+        menu
+          .querySelectorAll("a")
+          .forEach((link) => link.addEventListener("click", () => setOpen(false)));
+        window.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") setOpen(false);
+        });
+      })();
+    </script>
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer
+      id="kontakt"
+      class="relative z-10 mt-overlap rounded-t-[3rem] bg-surface-highest shadow-[0_-1.25rem_3.125rem_rgba(0,0,0,0.05)]"
+    >
+      <div
+        class="mx-auto grid max-w-[87.5rem] grid-cols-1 items-center gap-gutter px-container py-12 md:grid-cols-2 md:py-16"
+      >
+        <div>
+          <h2 class="font-organic-title text-headline-md text-primary">{site.shortName}</h2>
+          <p class="mt-4 max-w-sm text-body text-on-tertiary-container">{copyrightText}</p>
+        </div>
+        <nav aria-label="Footer" class="mt-4 flex flex-wrap gap-x-8 gap-y-4 md:mt-0 md:justify-end">
+          {
+            footerItems.map((item) => (
+              <a
+                class="text-body text-on-tertiary-container transition-colors hover:text-primary"
+                href={item.href}
+                data-astro-prefetch
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </footer>
+
+    <nav
+      aria-label="Mobile Schnellnavigation"
+      class="fixed bottom-0 left-0 z-50 flex w-full items-center justify-around rounded-t-xl bg-surface/95 px-2 py-3 pb-safe shadow-[0_-0.25rem_1.25rem_rgba(0,0,0,0.05)] backdrop-blur-lg md:hidden"
+    >
+      {
+        mobileNavItems.map((item) => (
+          <a
+            href={item.href}
+            data-astro-prefetch
+            aria-current={active === item.activeKey ? "page" : undefined}
+            class:list={[
+              "flex min-w-0 flex-col items-center justify-center rounded-full px-3 py-2 transition-colors",
+              active === item.activeKey
+                ? "bg-secondary-container text-on-secondary-container"
+                : "text-on-surface-variant hover:text-primary",
+            ]}
+          >
+            <span
+              class="material-symbols-outlined mb-1"
+              style={`font-variation-settings: 'FILL' ${active === item.activeKey ? 1 : 0};`}
+              aria-hidden="true"
+            >
+              {item.icon}
+            </span>
+            <span class="label-caps text-[0.625rem]">{item.label}</span>
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="h-24 md:hidden" aria-hidden="true"></div>
+  </body>
+</html>
