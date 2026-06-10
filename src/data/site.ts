@@ -29,7 +29,7 @@ export const site = {
   contactEmail: "kontakt@ikv-hennef.de",
   facebookUrl: "https://www.facebook.com/profile.php?id=100071361166973",
   address: {
-    street: "Am Steinweg 8a",
+    street: "Beethovenstraße 4",
     postalCode: "53773",
     city: "Hennef",
   },
