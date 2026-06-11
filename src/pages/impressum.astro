@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { addressCityLine, site } from "../data/site";
+import { addressCityLine, addressGoogleMapsUrl, boardMembers, site } from "../data/site";
 ---
 
 <BaseLayout
@@ -22,10 +22,18 @@ import { addressCityLine, site } from "../data/site";
     <article class="paper-card max-w-3xl rounded-[2rem] p-8 md:p-12">
       <h2 class="font-organic-title mb-6 text-headline-md text-primary">{site.legalName}</h2>
       <div class="space-y-6 text-body text-on-surface-variant">
-        <p>
-          {site.address.street}<br />
-          {addressCityLine}
-        </p>
+        <address class="not-italic">
+          <a
+            class="text-primary underline decoration-secondary/40 transition-colors hover:text-secondary"
+            href={addressGoogleMapsUrl}
+            rel="noreferrer"
+            target="_blank"
+            aria-label={`${site.address.street}, ${addressCityLine} in Google Maps öffnen`}
+          >
+            {site.address.street}<br />
+            {addressCityLine}
+          </a>
+        </address>
         <p>
           E-Mail:
           <a
@@ -35,7 +43,10 @@ import { addressCityLine, site } from "../data/site";
             {site.contactEmail}
           </a>
         </p>
-        <p>Vertreten durch den Vorstand des Vereins.</p>
+        <p>
+          Vertreten durch den Vorstand:
+          {boardMembers.map((member) => `${member.name} (${member.role})`).join(", ")}.
+        </p>
         <p>
           Verantwortlich für diese Website ist der {site.legalName}. Die Inhalte werden mit
           größtmöglicher Sorgfalt gepflegt.

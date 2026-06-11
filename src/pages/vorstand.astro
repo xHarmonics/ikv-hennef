@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { boardMembers, site } from "../data/site";
+---
+
+<BaseLayout
+  title={`Vorstand - ${site.shortName}`}
+  description={`Vorstand des ${site.legalName}.`}
+  active="board"
+>
+  <section
+    class="mx-auto min-h-[calc(100svh-8rem)] w-full max-w-[87.5rem] px-container pt-20 pb-32"
+  >
+    <div class="mb-16 max-w-2xl">
+      <p class="label-caps mb-6 text-secondary">Vorstand</p>
+      <h1 class="font-organic-title text-headline-mobile text-primary md:text-headline">
+        Verantwortung
+        <span class="block text-on-surface-variant">im Verein</span>
+      </h1>
+      <p class="mt-8 text-body-lg text-on-surface-variant">
+        Der Vorstand vertritt den {site.legalName} und begleitet die Vereinsarbeit in Hennef.
+      </p>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      {
+        boardMembers.map((member) => (
+          <article class="paper-card rounded-[2rem] p-8 md:p-12">
+            <p class="label-caps mb-4 text-secondary">{member.role}</p>
+            <h2 class="font-organic-title text-headline-md text-primary">{member.name}</h2>
+            <dl class="mt-8 space-y-4 text-body text-on-surface-variant">
+              <div>
+                <dt class="label-caps mb-2 text-outline">Mitglied seit</dt>
+                <dd>
+                  {member.memberSince}
+                  {member.note ? ` (${member.note})` : ""}
+                </dd>
+              </div>
+            </dl>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

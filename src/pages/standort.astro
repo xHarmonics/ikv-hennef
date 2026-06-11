@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { addressCityLine, routes, site } from "../data/site";
+import { addressCityLine, addressGoogleMapsUrl, routes, site } from "../data/site";
 ---
 
 <BaseLayout
@@ -26,17 +26,38 @@ import { addressCityLine, routes, site } from "../data/site";
 
       <article class="paper-card rounded-[2rem] p-8 md:p-12">
         <p class="label-caps mb-4 text-secondary">Anschrift</p>
-        <address class="font-organic-title text-headline-md text-primary not-italic">
-          {site.legalName}<br />
-          {site.address.street}<br />
-          {addressCityLine}
-        </address>
         <a
-          class="organic-button label-caps mt-8 inline-flex bg-primary px-6 py-3 text-on-primary"
-          href={routes.contact}
+          class="group block"
+          href={addressGoogleMapsUrl}
+          rel="noreferrer"
+          target="_blank"
+          aria-label={`${site.legalName}, ${site.address.street}, ${addressCityLine} in Google Maps öffnen`}
         >
-          Kontakt aufnehmen
+          <address
+            class="font-organic-title text-headline-md text-primary not-italic transition-colors group-hover:text-secondary"
+          >
+            {site.legalName}<br />
+            {site.address.street}<br />
+            {addressCityLine}
+          </address>
         </a>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a
+            class="organic-button label-caps inline-flex items-center gap-2 bg-primary px-6 py-3 text-on-primary"
+            href={addressGoogleMapsUrl}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <span class="material-symbols-outlined text-[1.125rem]" aria-hidden="true">map</span>
+            Google Maps
+          </a>
+          <a
+            class="organic-button label-caps inline-flex bg-surface-container px-6 py-3 text-primary"
+            href={routes.contact}
+          >
+            Kontakt aufnehmen
+          </a>
+        </div>
       </article>
     </div>
   </section>

@@ -2,6 +2,7 @@ export type ActiveKey =
   | "home"
   | "prayer"
   | "mosque"
+  | "board"
   | "downloads"
   | "education"
   | "social"
@@ -17,6 +18,13 @@ export interface NavItem {
   label: string;
   activeKey: ActiveKey;
   icon?: string;
+}
+
+export interface BoardMember {
+  name: string;
+  role: string;
+  memberSince: string;
+  note?: string;
 }
 
 export const site = {
@@ -39,6 +47,7 @@ export const routes = {
   home: "/",
   prayer: "/gebetszeiten/",
   mosque: "/moschee/",
+  board: "/vorstand/",
   education: "/bildung/",
   downloads: "/downloads/",
   join: "/mitglied-werden/",
@@ -52,6 +61,10 @@ export const routes = {
 export const addressCityLine = `${site.address.postalCode} ${site.address.city}`;
 
 export const addressLines = [site.legalName, site.address.street, addressCityLine];
+
+export const addressGoogleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  addressLines.join(", "),
+)}`;
 
 export const copyrightText = `© ${new Date().getFullYear()} ${site.displayName} ${site.tagline}.`;
 
@@ -79,6 +92,7 @@ export const mobileNavItems: NavItem[] = [
 
 export const menuItems: NavItem[] = [
   ...primaryNavItems,
+  { href: routes.board, label: "Vorstand", activeKey: "board" },
   { href: routes.donate, label: "Spenden", activeKey: "donate" },
   { href: routes.contact, label: "Kontakt", activeKey: "contact" },
   { href: routes.location, label: "Standort", activeKey: "location" },
@@ -87,8 +101,18 @@ export const menuItems: NavItem[] = [
 export const footerItems = [
   { href: routes.imprint, label: "Impressum" },
   { href: routes.privacy, label: "Datenschutz" },
+  { href: routes.board, label: "Vorstand" },
   { href: routes.contact, label: "Kontakt" },
   { href: routes.location, label: "Standort" },
+];
+
+export const boardMembers: BoardMember[] = [
+  {
+    name: "Masood Mobarak",
+    role: "Vorstandsvorsitzender",
+    memberSince: "16.09.2012",
+    note: "Gründungsmitglied",
+  },
 ];
 
 export const prayerTimes = [

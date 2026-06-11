@@ -215,23 +215,27 @@ const ogImageURL = new URL(image, siteURL).toString();
 
     <script is:inline>
       (() => {
-        const menu = document.querySelector("[data-mobile-menu]");
-        const open = document.querySelector("[data-menu-open]");
-        const closeTargets = document.querySelectorAll("[data-menu-close], [data-menu-backdrop]");
-
-        if (!menu || !open) return;
-
         const setOpen = (value) => {
+          const menu = document.querySelector("[data-mobile-menu]");
+          if (!menu) return;
+
           menu.classList.toggle("hidden", !value);
           menu.setAttribute("aria-hidden", value ? "false" : "true");
           document.documentElement.classList.toggle("overflow-hidden", value);
         };
 
-        open.addEventListener("click", () => setOpen(true));
-        closeTargets.forEach((target) => target.addEventListener("click", () => setOpen(false)));
-        menu
-          .querySelectorAll("a")
-          .forEach((link) => link.addEventListener("click", () => setOpen(false)));
+        if (window.__ikvMobileMenuListeners) return;
+        window.__ikvMobileMenuListeners = true;
+
+        document.addEventListener("click", (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+
+          if (target.closest("[data-menu-open]")) setOpen(true);
+          if (target.closest("[data-menu-close], [data-menu-backdrop]")) setOpen(false);
+          if (target.closest("[data-mobile-menu] a")) setOpen(false);
+        });
+
         window.addEventListener("keydown", (event) => {
           if (event.key === "Escape") setOpen(false);
         });
